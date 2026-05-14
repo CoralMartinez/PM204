@@ -1,107 +1,187 @@
+//   MÓDULO COCINA - CRUD CATÁLOGO
+
+const prompt = require("prompt-sync")();
 
 
-/*Catálogo de productos*/
+//Catálogo de productos
 
-/*Objetos y propiedades*/
+const catalogo = [
 
+{
+    id: "01",
+    nombre: "Café Cappuccino",
+    categoria: "Bebida",
+    precio: 35,
+    detalle: "Mediano"
+},
 
+{
+    id: "02",
+    nombre: "Café Americano",
+    categoria: "Bebida",
+    precio: 40,
+    detalle: "Mediano"
+},
 
-const bebida1 = {
-  id: "01",
-  nombre: "Café Cappuccino",
-  categoria: "Bebida",
-  precio: 35,
-  tamaño: "Mediano"
-};
+{
+    id: "03",
+    nombre: "Pastel de chocolate",
+    categoria: "Postre",
+    precio: 50,
+    detalle: "Rebanada individual"
+},
 
-const bebida2 = {
-  id: "02",
-  nombre: "Café Americano",
-  categoria: "Bebida",
-  precio: 40,
-  tamaño: "Mediano"
-};
+{
+    id: "04",
+    nombre: "Galletas de mantequilla",
+    categoria: "Postre",
+    precio: 35,
+    detalle: "4 piezas"
+},
 
+{
+    id: "05",
+    nombre: "Sandwich de jamón",
+    categoria: "Comida",
+    precio: 55,
+    detalle: "Individual"
+},
 
+{
+    id: "06",
+    nombre: "Sincronizadas",
+    categoria: "Comida",
+    precio: 45,
+    detalle: "2 piezas"
+}
 
-const postre1 = {
-  id: "03",
-  nombre: "Pastel de chocolate",
-  categoria: "Postre",
-  precio: 50,
-  porcion: "Rebanada individual"
-};
+];
 
-const postre2 = {
-  id: "04",
-  nombre: "Galletas de mantequilla",
-  categoria: "Postre",
-  precio: 35,
-  porcion: "4 piezas"
-};
-
-
-
-const comida1 = {
-  id: "05",
-  nombre: "Sandwich de jamón",
-  categoria: "Comida",
-  precio: 55,
-  tamaño: "Individual"
-};
-
-
-const comida2 = {
-  id: "06",
-  nombre: "Sincronizadas",
-  categoria: "Comida",
-  precio: 45,
-  tamaño: "2 piezas"
-};
+let opcion = -1;
 
 
-/* Mostrar propiedades */
-console.log("Bebidas")
-console.log(bebida1.nombre);
-console.log(bebida1.precio);
-console.log(bebida1.tamaño);
-console.log(bebida2.nombre);
-console.log(bebida2.precio);
-console.log(bebida2.tamaño);
+// Crear producto
+function agregarProducto(){
+
+    let id = prompt("ID: ");
+    let nombre = prompt("Nombre: ");
+    let categoria = prompt("Categoría: ");
+    let precio = Number(prompt("Precio: $"));
+    let detalle = prompt("Detalle: ");
+
+    catalogo.push({
+        id: id,
+        nombre: nombre,
+        categoria: categoria,
+        precio: precio,
+        detalle: detalle
+    });
+
+    console.log("Producto agregado.");
+}
 
 
-console.log("Postres")
-console.log(postre1.nombre);
-console.log(postre1.precio);
-console.log(postre1.porcion);
-console.log(postre2.nombre);
-console.log(postre2.precio);
-console.log(postre2.porcion);
+// Mostrar/Leer catálogo
+function mostrarCatalogo(){
 
-console.log("Comidas")
-console.log(comida1.nombre);
-console.log(comida1.precio);
-console.log(comida1.tamaño);
-console.log(comida2.nombre);
-console.log(comida2.precio);
-console.log(comida2.tamaño);
+    console.log("\n===== CATÁLOGO =====");
 
-/* ARRAYS */
-console.log("Catálogo de productos")
-const catalogo = [bebida1, postre1, comida1];
+    for(let i = 0; i < catalogo.length; i++){
 
-/* Mostrar*/
+        console.log(
+            (i + 1) + ". " +
+            catalogo[i].id + " | " +
+            catalogo[i].nombre + " | " +
+            catalogo[i].categoria + " | $" +
+            catalogo[i].precio + " | " +
+            catalogo[i].detalle
+        );
+    }
 
-console.log(catalogo);
-
-/* ACCEDER A ELEMENTOS */
-
-console.log(catalogo[0].nombre); // Café Cappuccino
-console.log(catalogo[1].nombre); //  Café Americano
-console.log(catalogo[2].nombre); // Pastel de chocolate
-console.log(catalogo[3].nombre); // Galletas de mantequilla
-console.log(catalogo[4].nombre); // Sandwich de jamón
-console.log(catalogo[5].nombre); // Sincronizadas
+    console.log("Total productos: " + catalogo.length);
+}
 
 
-console.log(catalogo.length); // 6
+// Actualizar producto
+
+function actualizarProducto(){
+
+    mostrarCatalogo();
+
+    let posicion = Number(prompt("Número de producto a actualizar: ")) - 1;
+
+    if(posicion >= 0 && posicion < catalogo.length){
+
+        catalogo[posicion].nombre = prompt("Nuevo nombre: ");
+        catalogo[posicion].categoria = prompt("Nueva categoría: ");
+        catalogo[posicion].precio = Number(prompt("Nuevo precio: $"));
+        catalogo[posicion].detalle = prompt("Nuevo detalle: ");
+
+        console.log("Producto actualizado.");
+    }
+    else{
+        console.log("Número inválido.");
+    }
+}
+
+
+// Eliminar producto
+
+function eliminarProducto(){
+
+    mostrarCatalogo();
+
+    let posicion = Number(prompt("Número de producto a eliminar: ")) - 1;
+
+    if(posicion >= 0 && posicion < catalogo.length){
+
+        catalogo.splice(posicion, 1);
+
+        console.log("Producto eliminado.");
+    }
+    else{
+        console.log("Número inválido.");
+    }
+}
+
+
+// MENÚ Cocina
+while(opcion != 0){
+
+    console.log("\n=======================");
+    console.log("MÓDULO COCINA");
+    console.log("=======================");
+    console.log("1. Agregar producto");
+    console.log("2. Mostrar catálogo");
+    console.log("3. Actualizar producto");
+    console.log("4. Eliminar producto");
+    console.log("0. Salir");
+
+    opcion = Number(prompt("Selecciona opción: "));
+
+    switch(opcion){
+
+        case 1:
+            agregarProducto();
+            break;
+
+        case 2:
+            mostrarCatalogo();
+            break;
+
+        case 3:
+            actualizarProducto();
+            break;
+
+        case 4:
+            eliminarProducto();
+            break;
+
+        case 0:
+            console.log("Sistema cerrado.");
+            break;
+
+        default:
+            console.log("Opción inválida.");
+    }
+}
