@@ -1,14 +1,14 @@
-//   MÓDULO COCINA - CRUD CATÁLOGO
+//   MÓDULO COCINA - CATÁLOGO
+// ======================================
 
 const prompt = require("prompt-sync")();
 
-
-//Catálogo de productos
+// CATÁLOGO DE PRODUCTOS
 
 const catalogo = [
 
 {
-    id: "01",
+    id: 1,
     nombre: "Café Cappuccino",
     categoria: "Bebida",
     precio: 35,
@@ -16,7 +16,7 @@ const catalogo = [
 },
 
 {
-    id: "02",
+    id: 2,
     nombre: "Café Americano",
     categoria: "Bebida",
     precio: 40,
@@ -24,7 +24,7 @@ const catalogo = [
 },
 
 {
-    id: "03",
+    id: 3,
     nombre: "Pastel de chocolate",
     categoria: "Postre",
     precio: 50,
@@ -32,7 +32,7 @@ const catalogo = [
 },
 
 {
-    id: "04",
+    id: 4,
     nombre: "Galletas de mantequilla",
     categoria: "Postre",
     precio: 35,
@@ -40,15 +40,15 @@ const catalogo = [
 },
 
 {
-    id: "05",
-    nombre: "Sandwich de jamón",
+    id: 5,
+    nombre: "Sándwich de pollo",
     categoria: "Comida",
     precio: 55,
     detalle: "Individual"
 },
 
 {
-    id: "06",
+    id: 6,
     nombre: "Sincronizadas",
     categoria: "Comida",
     precio: 45,
@@ -59,122 +59,174 @@ const catalogo = [
 
 let opcion = -1;
 
+// MOSTRAR CATÁLOGO
 
-// Crear producto
-function agregarProducto(){
-
-    let id = prompt("ID: ");
-    let nombre = prompt("Nombre: ");
-    let categoria = prompt("Categoría: ");
-    let precio = Number(prompt("Precio: $"));
-    let detalle = prompt("Detalle: ");
-
-    catalogo.push({
-        id: id,
-        nombre: nombre,
-        categoria: categoria,
-        precio: precio,
-        detalle: detalle
-    });
-
-    console.log("Producto agregado.");
-}
-
-
-// Mostrar/Leer catálogo
 function mostrarCatalogo(){
 
-    console.log("\n===== CATÁLOGO =====");
+    console.log("\n===== CATÁLOGO DE PRODUCTOS =====");
 
     for(let i = 0; i < catalogo.length; i++){
 
         console.log(
-            (i + 1) + ". " +
-            catalogo[i].id + " | " +
-            catalogo[i].nombre + " | " +
-            catalogo[i].categoria + " | $" +
-            catalogo[i].precio + " | " +
-            catalogo[i].detalle
+            "ID: " + catalogo[i].id +
+            " | " + catalogo[i].nombre +
+            " | " + catalogo[i].categoria +
+            " | $" + catalogo[i].precio +
+            " | " + catalogo[i].detalle
+        );
+    }
+}
+
+// FILTER - PRODUCTOS BARATOS
+
+function productosBaratos(){
+
+    let baratos = catalogo.filter(
+        producto => producto.precio <= 40
+    );
+
+    console.log("\n===== PRODUCTOS BARATOS =====");
+
+    baratos.forEach(producto => {
+
+        console.log(
+            producto.nombre +
+            " - $" + producto.precio
+        );
+    });
+}
+
+// FILTER - PRODUCTOS CAROS
+
+function productosCaros(){
+
+    let caros = catalogo.filter(
+        producto => producto.precio >= 50
+    );
+
+    console.log("\n===== PRODUCTOS CAROS =====");
+
+    caros.forEach(producto => {
+
+        console.log(
+            producto.nombre +
+            " - $" + producto.precio
+        );
+    });
+}
+
+// FILTER - BUSCAR BEBIDAS
+
+function buscarBebidas(){
+
+    let bebidas = catalogo.filter(
+        producto => producto.categoria === "Bebida"
+    );
+
+    console.log("\n===== BEBIDAS =====");
+
+    bebidas.forEach(producto => {
+
+        console.log(
+            producto.nombre +
+            " - $" + producto.precio
+        );
+    });
+}
+
+// FILTER - BUSCAR POSTRES
+
+function buscarPostres(){
+
+    let postres = catalogo.filter(
+        producto => producto.categoria === "Postre"
+    );
+
+    console.log("\n===== POSTRES =====");
+
+    postres.forEach(producto => {
+
+        console.log(
+            producto.nombre +
+            " - $" + producto.precio
+        );
+    });
+}
+
+
+// FIND - BUSCAR PRODUCTO POR ID
+
+function buscarProductoPorID(){
+
+    let idBuscar = Number(
+        prompt("Ingresa ID del producto: ")
+    );
+
+    let producto = catalogo.find(
+        producto => producto.id === idBuscar
+    );
+
+    console.log("\n===== RESULTADO =====");
+
+    if(producto){
+
+        console.log(
+            "ID: " + producto.id +
+            " | " + producto.nombre +
+            " | " + producto.categoria +
+            " | $" + producto.precio +
+            " | " + producto.detalle
         );
     }
 
-    console.log("Total productos: " + catalogo.length);
-}
-
-
-// Actualizar producto
-
-function actualizarProducto(){
-
-    mostrarCatalogo();
-
-    let posicion = Number(prompt("Número de producto a actualizar: ")) - 1;
-
-    if(posicion >= 0 && posicion < catalogo.length){
-
-        catalogo[posicion].nombre = prompt("Nuevo nombre: ");
-        catalogo[posicion].categoria = prompt("Nueva categoría: ");
-        catalogo[posicion].precio = Number(prompt("Nuevo precio: $"));
-        catalogo[posicion].detalle = prompt("Nuevo detalle: ");
-
-        console.log("Producto actualizado.");
-    }
     else{
-        console.log("Número inválido.");
+        console.log("Producto no encontrado.");
     }
 }
 
+// MENÚ PRINCIPAL
 
-// Eliminar producto
-
-function eliminarProducto(){
-
-    mostrarCatalogo();
-
-    let posicion = Number(prompt("Número de producto a eliminar: ")) - 1;
-
-    if(posicion >= 0 && posicion < catalogo.length){
-
-        catalogo.splice(posicion, 1);
-
-        console.log("Producto eliminado.");
-    }
-    else{
-        console.log("Número inválido.");
-    }
-}
-
-
-// MENÚ Cocina
 while(opcion != 0){
 
-    console.log("\n=======================");
+    console.log("\n========================");
     console.log("MÓDULO COCINA");
-    console.log("=======================");
-    console.log("1. Agregar producto");
-    console.log("2. Mostrar catálogo");
-    console.log("3. Actualizar producto");
-    console.log("4. Eliminar producto");
+    console.log("========================");
+    console.log("1. Mostrar catálogo");
+    console.log("2. Productos baratos");
+    console.log("3. Productos caros");
+    console.log("4. Buscar bebidas");
+    console.log("5. Buscar postres");
+    console.log("6. Buscar producto por ID");
     console.log("0. Salir");
 
-    opcion = Number(prompt("Selecciona opción: "));
+    opcion = Number(
+        prompt("Selecciona opción: ")
+    );
 
     switch(opcion){
 
         case 1:
-            agregarProducto();
-            break;
-
-        case 2:
             mostrarCatalogo();
             break;
 
+        case 2:
+            productosBaratos();
+            break;
+
         case 3:
-            actualizarProducto();
+            productosCaros();
             break;
 
         case 4:
-            eliminarProducto();
+            buscarBebidas();
+            break;
+
+        case 5:
+            buscarPostres();
+            break;
+
+        case 6:
+            buscarProductoPorID();
             break;
 
         case 0:
