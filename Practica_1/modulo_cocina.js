@@ -1,239 +1,87 @@
-//   MÓDULO COCINA - CATÁLOGO
-// ======================================
+const productos = [ 
+    { id: 1, nombre: "Café", precio: 30, categoria: "Bebida" },
 
-const prompt = require("prompt-sync")();
+    { id: 2, nombre: "Capuchino", precio: 45, categoria: "Bebida" },
 
-// CATÁLOGO DE PRODUCTOS
+    { id: 3, nombre: "Pastel", precio: 50, categoria: "Postre" },
 
-const catalogo = [
-
-{
-    id: 1,
-    nombre: "Café Cappuccino",
-    categoria: "Bebida",
-    precio: 35,
-    detalle: "Mediano"
-},
-
-{
-    id: 2,
-    nombre: "Café Americano",
-    categoria: "Bebida",
-    precio: 40,
-    detalle: "Mediano"
-},
-
-{
-    id: 3,
-    nombre: "Pastel de chocolate",
-    categoria: "Postre",
-    precio: 50,
-    detalle: "Rebanada individual"
-},
-
-{
-    id: 4,
-    nombre: "Galletas de mantequilla",
-    categoria: "Postre",
-    precio: 35,
-    detalle: "4 piezas"
-},
-
-{
-    id: 5,
-    nombre: "Sándwich de pollo",
-    categoria: "Comida",
-    precio: 55,
-    detalle: "Individual"
-},
-
-{
-    id: 6,
-    nombre: "Sincronizadas",
-    categoria: "Comida",
-    precio: 45,
-    detalle: "2 piezas"
-}
-
+    { id: 4, nombre: "Galletas", precio: 25, categoria: "Postre" }
 ];
 
-let opcion = -1;
 
-// MOSTRAR CATÁLOGO
+// MOSTRAR MENÚ
 
-function mostrarCatalogo(){
+function mostrarMenu() {
 
-    console.log("\n===== CATÁLOGO DE PRODUCTOS =====");
+    console.log("\n===== MENÚ =====");
 
-    for(let i = 0; i < catalogo.length; i++){
-
-        console.log(
-            "ID: " + catalogo[i].id +
-            " | " + catalogo[i].nombre +
-            " | " + catalogo[i].categoria +
-            " | $" + catalogo[i].precio +
-            " | " + catalogo[i].detalle
-        );
-    }
-}
-
-// FILTER - PRODUCTOS BARATOS
-
-function productosBaratos(){
-
-    let baratos = catalogo.filter(
-        producto => producto.precio <= 40
-    );
-
-    console.log("\n===== PRODUCTOS BARATOS =====");
-
-    baratos.forEach(producto => {
+    productos.forEach(producto => {
 
         console.log(
-            producto.nombre +
-            " - $" + producto.precio
+            `${producto.id}. ${producto.nombre} - $${producto.precio} - ${producto.categoria}`
         );
     });
 }
 
-// FILTER - PRODUCTOS CAROS
 
-function productosCaros(){
+// BUSCAR PRODUCTO POR ID
 
-    let caros = catalogo.filter(
-        producto => producto.precio >= 50
+function buscarProducto(id) {
+
+    return productos.find(
+        producto => producto.id === id
     );
-
-    console.log("\n===== PRODUCTOS CAROS =====");
-
-    caros.forEach(producto => {
-
-        console.log(
-            producto.nombre +
-            " - $" + producto.precio
-        );
-    });
 }
 
-// FILTER - BUSCAR BEBIDAS
 
-function buscarBebidas(){
+// PRODUCTOS BARATOS
 
-    let bebidas = catalogo.filter(
+function productosBaratos() {
+
+    return productos.filter(
+        producto => producto.precio <= 30
+    );
+}
+
+
+// PRODUCTOS CAROS
+
+function productosCaros() {
+
+    return productos.filter(
+        producto => producto.precio >= 45
+    );
+}
+
+
+// BUSCAR BEBIDAS
+
+function buscarBebidas() {
+
+    return productos.filter(
         producto => producto.categoria === "Bebida"
     );
-
-    console.log("\n===== BEBIDAS =====");
-
-    bebidas.forEach(producto => {
-
-        console.log(
-            producto.nombre +
-            " - $" + producto.precio
-        );
-    });
 }
 
-// FILTER - BUSCAR POSTRES
 
-function buscarPostres(){
+// BUSCAR POSTRES
 
-    let postres = catalogo.filter(
+function buscarPostres() {
+
+    return productos.filter(
         producto => producto.categoria === "Postre"
     );
-
-    console.log("\n===== POSTRES =====");
-
-    postres.forEach(producto => {
-
-        console.log(
-            producto.nombre +
-            " - $" + producto.precio
-        );
-    });
 }
 
 
-// FIND - BUSCAR PRODUCTO POR ID
+// EXPORTAR
 
-function buscarProductoPorID(){
+module.exports = {
 
-    let idBuscar = Number(
-        prompt("Ingresa ID del producto: ")
-    );
-
-    let producto = catalogo.find(
-        producto => producto.id === idBuscar
-    );
-
-    console.log("\n===== RESULTADO =====");
-
-    if(producto){
-
-        console.log(
-            "ID: " + producto.id +
-            " | " + producto.nombre +
-            " | " + producto.categoria +
-            " | $" + producto.precio +
-            " | " + producto.detalle
-        );
-    }
-
-    else{
-        console.log("Producto no encontrado.");
-    }
-}
-
-// MENÚ PRINCIPAL
-
-while(opcion != 0){
-
-    console.log("\n========================");
-    console.log("MÓDULO COCINA");
-    console.log("========================");
-    console.log("1. Mostrar catálogo");
-    console.log("2. Productos baratos");
-    console.log("3. Productos caros");
-    console.log("4. Buscar bebidas");
-    console.log("5. Buscar postres");
-    console.log("6. Buscar producto por ID");
-    console.log("0. Salir");
-
-    opcion = Number(
-        prompt("Selecciona opción: ")
-    );
-
-    switch(opcion){
-
-        case 1:
-            mostrarCatalogo();
-            break;
-
-        case 2:
-            productosBaratos();
-            break;
-
-        case 3:
-            productosCaros();
-            break;
-
-        case 4:
-            buscarBebidas();
-            break;
-
-        case 5:
-            buscarPostres();
-            break;
-
-        case 6:
-            buscarProductoPorID();
-            break;
-
-        case 0:
-            console.log("Sistema cerrado.");
-            break;
-
-        default:
-            console.log("Opción inválida.");
-    }
+    mostrarMenu,
+    buscarProducto,
+    productosBaratos,
+    productosCaros,
+    buscarBebidas,
+    buscarPostres
 }
