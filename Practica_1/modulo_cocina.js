@@ -1,87 +1,59 @@
-const productos = [ 
-    { id: 1, nombre: "Café", precio: 30, categoria: "Bebida" },
 
-    { id: 2, nombre: "Capuchino", precio: 45, categoria: "Bebida" },
+const catalogo = [
+    { id: 1, nombre: "Café Moka Chico", categoria: "Bebida", precio: 30, porcion: "250 ml" },
+    { id: 2, nombre: "Café Moka Mediano", categoria: "Bebida", precio: 40, porcion: "500 ml" },
+    { id: 3, nombre: "Café Moka Grande", categoria: "Bebida", precio: 55, porcion: "800 ml" },
 
-    { id: 3, nombre: "Pastel", precio: 50, categoria: "Postre" },
+    { id: 4, nombre: "Café Capuchino Chico", categoria: "Bebida", precio: 40, porcion: "250 ml" },
+    { id: 5, nombre: "Café Capuchino Mediano", categoria: "Bebida", precio: 50, porcion: "500 ml" },
+    { id: 6, nombre: "Café Capuchino Grande", categoria: "Bebida", precio: 65, porcion: "800 ml" },
 
-    { id: 4, nombre: "Galletas", precio: 25, categoria: "Postre" }
+    { id: 7, nombre: "Sincronizadas", categoria: "Comida", precio: 40, porcion: "2 piezas" },
+    { id: 8, nombre: "Sándwich de Pollo", categoria: "Comida", precio: 70, porcion: "1 unidad" },
+
+    { id: 9, nombre: "Galletas de vainilla", categoria: "Postre", precio: 25, porcion: "Paquete de 4" },
+    { id: 10, nombre: "Pastel de chocolate", categoria: "Postre", precio: 50, porcion: "1 rebanada" }
 ];
 
-
-// MOSTRAR MENÚ
-
 function mostrarMenu() {
-
     console.log("\n===== MENÚ =====");
 
-    productos.forEach(producto => {
-
-        console.log(
-            `${producto.id}. ${producto.nombre} - $${producto.precio} - ${producto.categoria}`
-        );
+    catalogo.forEach(p => {
+        console.log(`${p.id}. ${p.nombre} | $${p.precio} | ${p.categoria} | ${p.porcion}`);
     });
 }
 
-
-// BUSCAR PRODUCTO POR ID
-
-function buscarProducto(id) {
-
-    return productos.find(
-        producto => producto.id === id
-    );
-}
-
-
-// PRODUCTOS BARATOS
-
 function productosBaratos() {
-
-    return productos.filter(
-        producto => producto.precio <= 30
-    );
+    return catalogo.filter(p => p.precio <= 40);
 }
-
-
-// PRODUCTOS CAROS
 
 function productosCaros() {
-
-    return productos.filter(
-        producto => producto.precio >= 45
-    );
+    return catalogo.filter(p => p.precio >= 50);
 }
-
-
-// BUSCAR BEBIDAS
 
 function buscarBebidas() {
-
-    return productos.filter(
-        producto => producto.categoria === "Bebida"
-    );
+    return catalogo.filter(p => p.categoria === "Bebida");
 }
-
-
-// BUSCAR POSTRES
 
 function buscarPostres() {
-
-    return productos.filter(
-        producto => producto.categoria === "Postre"
-    );
+    return catalogo.filter(p => p.categoria === "Postre");
 }
 
+function buscarComida() {
+    return catalogo.filter(p => p.categoria === "Comida");
+}
 
-// EXPORTAR
+function buscarProductoPorID(id) {
+    return catalogo.find(p => p.id == id);
+}
 
 module.exports = {
-
+    catalogo,
     mostrarMenu,
-    buscarProducto,
     productosBaratos,
     productosCaros,
     buscarBebidas,
-    buscarPostres
-}
+    buscarPostres,
+    buscarComida,
+    buscarProductoPorID
+};
