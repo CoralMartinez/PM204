@@ -23,8 +23,17 @@ export default function App() {
       <Saludo2/>
       <Text>----------------------------------------------</Text>
 
-      <Perfil/>
-      
+      <Text>----------------------------------------------</Text>
+
+      <Perfil nombre="Marmando" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
+      <Text>----------------------------------------------</Text>
+
+      <Perfil 
+      nombre="Evangeline" 
+      carrera="ISC" 
+      materia="Programación Móvil" 
+      cuatrimestre="6° Noveno"
+      />
 
       <StatusBar style="auto" />
     
@@ -33,6 +42,7 @@ export default function App() {
   );  
   
 }
+
 
 
 
