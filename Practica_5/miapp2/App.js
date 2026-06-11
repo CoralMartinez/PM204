@@ -1,7 +1,7 @@
 /*Zona 1: Importaciones, componentes y archivos*/
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, Text, View} from 'react-native';
 import {Saludo} from './components/Saludo.js';
 import {Saludo2} from './components/Saludo2.js';
 import {Perfil} from './components/Perfil.js';
@@ -12,28 +12,18 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <Image source={require('./assets/wave.png')}/>
-
-      <Text>¡Hola Mundo RN!</Text>
-      <Text>----------------------------------------------</Text>
-
-      <Saludo/>
-      <Text>----------------------------------------------</Text>
-
-      <Saludo2/>
-      <Text>----------------------------------------------</Text>
-
-      <Text>----------------------------------------------</Text>
-
-      <Perfil nombre="Marmando" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
-      <Text>----------------------------------------------</Text>
-
+      <Perfil style={styles.tarjetaVerde} nombre="Jacks" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
+     
       <Perfil 
+      style={styles.tarjetaRoja}
       nombre="Evangeline" 
       carrera="ISC" 
       materia="Programación Móvil" 
       cuatrimestre="6° Noveno"
       />
+
+      <Perfil style={styles.tarjetaVerde} nombre="Apollo" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
+     
 
       <StatusBar style="auto" />
     
@@ -44,15 +34,28 @@ export default function App() {
 }
 
 
-
-
 /*Zona 3: Estilos y posicionamiento */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection:'row',
   },
+  
+  
+  tarjetaVerde:{
+        backgroundColor:'#04f257',
+      
+    },
+
+    tarjetaRoja:{
+        backgroundColor:'#ff6262',
+        
+    },
+    
+
 });
+
 
