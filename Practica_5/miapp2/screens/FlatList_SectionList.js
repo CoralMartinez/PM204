@@ -2,17 +2,14 @@
 
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, Text, View} from 'react-native';
-import MenuScreen from './screens/MenuScreen';
-
-
 
 
 /*Zona 2: Main - Renderizado de componentes */
-export default function App() {
+export default function FlatList_SectionList() {
   return (
     <View style={styles.container}>
 
-      <MenuScreen> </MenuScreen>
+        <Text>Aquí va la práctica de FlatList y Section List</Text>
 
 
       <StatusBar style="auto" />
@@ -22,7 +19,6 @@ export default function App() {
   );  
   
 }
-
 
 /*Zona 3: Estilos y posicionamiento */
 const styles = StyleSheet.create({

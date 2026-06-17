@@ -2,17 +2,14 @@
 
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, Text, View} from 'react-native';
-import MenuScreen from './screens/MenuScreen';
-
-
 
 
 /*Zona 2: Main - Renderizado de componentes */
-export default function App() {
+export default function ActivityIndicator_KeyboardAvoidingView() {
   return (
     <View style={styles.container}>
 
-      <MenuScreen> </MenuScreen>
+        <Text>Aquí va la práctica de ActivityIndicator y KeyboardAvoidingView</Text>
 
 
       <StatusBar style="auto" />

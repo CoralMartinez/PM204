@@ -2,17 +2,14 @@
 
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, Text, View} from 'react-native';
-import MenuScreen from './screens/MenuScreen';
-
-
 
 
 /*Zona 2: Main - Renderizado de componentes */
-export default function App() {
+export default function Dos_ImageBackground_SlapshScreen() {
   return (
     <View style={styles.container}>
 
-      <MenuScreen> </MenuScreen>
+        <Text>Aquí va la 2° práctica de ImageBackground y SlapshScreen</Text>
 
 
       <StatusBar style="auto" />
@@ -22,7 +19,6 @@ export default function App() {
   );  
   
 }
-
 
 /*Zona 3: Estilos y posicionamiento */
 const styles = StyleSheet.create({
