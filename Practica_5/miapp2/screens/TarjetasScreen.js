@@ -12,17 +12,17 @@ export default function TarjetasScreen() {
   return (
     <View style={styles.container}>
 
-      <Perfil style={styles.tarjetaVerde} nombre="Jacks" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
+      <Perfil style={styles.tarjetaVerde} nombre="Jacks" carrera="El dolorosamente guapo...ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
      
       <Perfil 
       style={styles.tarjetaRoja}
       nombre="Evangeline" 
-      carrera="ISC" 
+      carrera="La de la profecía y el zorro...ISC" 
       materia="Programación Móvil" 
       cuatrimestre="6° Noveno"
       />
 
-      <Perfil style={styles.tarjetaVerde} nombre="Apollo" carrera="ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
+      <Perfil style={styles.tarjetaVerde} nombre="Apollo" carrera="El arquero...ISC" materia="Programación Móvil" cuatrimestre="9° Noveno"/>
      
 
       <StatusBar style="auto" />
