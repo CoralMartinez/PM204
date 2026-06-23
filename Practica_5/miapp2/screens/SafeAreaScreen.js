@@ -1,7 +1,8 @@
+//IMPORTACIONES
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView,} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Button} from 'react-native';
 import { useState } from 'react';
-
+//MAIN
 export default function SafeAreaScreen() {
   const [mostrarMensaje, setMostrarMensaje] = useState(true);
 
@@ -21,10 +22,12 @@ export default function SafeAreaScreen() {
         </View>
       )}
 
+      <View style={{flex:1}}>
+
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.listaContenido}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       >
         {[
           'Comprar Pan',
@@ -36,16 +39,24 @@ export default function SafeAreaScreen() {
           'Practicar guitarra',
           'Sacar a pasear al perro',
           'Hacer la tarea',
+          'Ver el life action Hit Viral',
+          'Terminar de leer "Camino a conocer a mamá"',
+          'Descargar el libro "La maldición del amor verdadero"',
+          'Seguir leyendo el manhwa Weak Hero',
+       
+          
         ].map((tarea, i) => (
           <View key={i} style={styles.tarjeta}>
             <Text style={styles.tarjetaTexto}>{tarea}</Text>
           </View>
         ))}
       </ScrollView>
+    </View>
     </SafeAreaView>
   );
 }
 
+//ESTILOS
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
