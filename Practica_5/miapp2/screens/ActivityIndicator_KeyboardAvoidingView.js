@@ -1,181 +1,126 @@
-import React, {useState} from 'react';
-import {StatusBar} from 'expo-status-bar';
+//Importaciones
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 
-import { StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity, 
-  ActivityIndicator, Alert, View} from 'react-native';
+//Main
+export default function ActivityIndicator_KeyboardAvoidingView() {
 
+  const [n, setN] = useState('');
+  const [c, setC] = useState('');
+  const [p, setP] = useState('');
+  const [l, setL] = useState(false);
+  const [ok, setOk] = useState(false);
+  const [e, setE] = useState('');
+  const [out, setOut] = useState(false);
 
-export default function ActivityIndicator_KeyboardAvoidingView(){
+  const login = () => {
+    if (!n || !c || !p) return setE('Completa campos');
+    if (!c.includes('@')) return setE('Correo inválido');
 
-  const[nombre, setNombre] = useState('');
-  const[correo, setCorreo] = useState('');
-  const[contrasena, setContrasena] = useState('');
-
-  const[cargando, setCargando] = useState(false);
-  const[mensaje, setMensaje] = useState('');
-
-  const iniciarSesion = () =>{
-
-    if(nombre ===''|| correo === '' || contrasena===''){
-      Alert.alert('Campos vacíos', 'Complete todos los campos');
-      return;
-    }
-
-    setMensaje('');
-    setCargando(true);
+    setE('');
+    setL(true);
 
     setTimeout(() => {
-
-      setCargando(false);
-
-      setMensaje('Datos válidos. Bienvenido(a)'+nombre);
-
-    }, 3000);
-
+      setL(false);
+      setOk(true);
+    }, 1200);
   };
 
+  const logout = () => {
+    setOut(true);
+    setTimeout(() => {
+      setOk(false);
+      setN(''); setC(''); setP('');
+      setE('');
+      setOut(false);
+    }, 1000);
+  };
 
-  return(
+  if (ok)
+    return (
+      <View style={styles.ok}>
+        <Text style={styles.t}>Bienvenid@ {n}</Text>
 
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding':'height'}>
-    
-      <Text style={styles.titulo}>
-        ActivityIndicator y KeyboardAvoidingView
-
-      </Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={nombre}
-        onChangeText={setNombre}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        keyboardType="email-address"
-        value={correo}
-        onChangeText={setCorreo}
-
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        secureTextEntry={true}
-        value={contrasena}
-        onChangeText={setContrasena}      
-      />
-
-      {
-        cargando ?(
-
-          <View style={styles.spinnerContainer}>
-
-            <ActivityIndicator
-              size="large"
-              color="blue"
-              animating={cargando}
-            />
-
-            <Text>
-              Validando información...
-            </Text>
-
-          </View>
+        {out ? (
+          <>
+            <ActivityIndicator color="#002fa7" />
+            <Text style={styles.azul}>Saliendo...</Text>
+          </>
         ) : (
-
-          <TouchableOpacity
-            style={styles.boton}
-            onPress={iniciarSesion}
-          >
-
-          <Text style={styles.textoBoton}>
-            Iniciar Sesión
-          </Text>
-
+          <TouchableOpacity style={styles.btn} onPress={logout}>
+            <Text style={styles.btnt}>Cerrar sesión</Text>
           </TouchableOpacity>
+        )}
+        <StatusBar style="dark" />
+      </View>
+    );
 
-        )
-      }
+  return (
+    <KeyboardAvoidingView style={styles.c} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-      <Text style={styles.mensaje}>
-        {mensaje}
-      </Text>
+      <Text style={styles.t}>Inicio de sesión</Text>
 
-      <StatusBar style="auto"/>
-    
+      <TextInput style={styles.i} placeholder="Nombre" placeholderTextColor="#666" value={n} onChangeText={setN} />
+      <TextInput style={styles.i} placeholder="Correo" placeholderTextColor="#666" value={c} onChangeText={setC} />
+      <TextInput style={styles.i} placeholder="Contraseña" placeholderTextColor="#666" value={p} onChangeText={setP} secureTextEntry />
+
+      {!!e && <Text style={styles.azul}>{e}</Text>}
+
+      {l ? (
+        <ActivityIndicator size="large" color="#002fa7" />
+      ) : (
+        <TouchableOpacity style={styles.btn} onPress={login}>
+          <Text style={styles.btnt}>Ingresar</Text>
+        </TouchableOpacity>
+      )}
+
+      <StatusBar style="dark" />
     </KeyboardAvoidingView>
-
-
-
   );
-
-
 }
 
+//Estilos
+const styles = StyleSheet.create({
 
- const styles = StyleSheet.create({
+  c: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
 
-  container:{
-    flex:1,
-    backgroundColor:'#ffffff',
-    justifyContent:'center',
-    alignItems:'center',
-    padding: 20
+  ok: { flex: 1, backgroundColor: '#FFE862', justifyContent: 'center', alignItems: 'center' },
+
+  t: {
+    fontSize: 32, 
+    fontWeight: 'bold',
+    color: '#002fa7',
+    marginBottom: 20
   },
 
-  titulo:{
-    fontSize:24,
-    fontWeight:'bold',
-    marginBottom:20,
-    textAlign:'center'
-  },
-
-  input:{
-    width:'90%',
-    height: 50,
+  i: {
+    width: '85%',
     borderWidth: 1,
-    borderColor: '#000',
-    borderRadius:8, 
-    paddingHorizontal:10,
-    marginVertical:5
+    borderColor: '#002fa7',
+    marginVertical: 6,
+    padding: 12,
+    fontSize: 18,   
+    color: '#002fa7'
   },
 
-  boton:{
-    backgroundColor: '#2196F3',
-    width: '90%',
-    padding: 15,
-    borderRadius:8,
-    marginTop:20
+  btn: {
+    backgroundColor: '#002fa7',
+    padding: 14,
+    marginTop: 15,
+    borderRadius: 8
   },
 
-  textoBoton:{
-    color:'#ffffff',
-    textAlign: 'center',
-    fontWeight: 'bold'
-
+  btnt: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20  
   },
 
-  spinnerContainer:{
-    alignItems: 'center',
-    marginTop:20
-  },
-
-  mensaje:{
-
-    marginTop:20,
-    fontSize:18,
-    fontWeight:'bold',
-    color: 'green',
-    textAlign: 'center'
-
+  azul: {
+    color: '#002fa7',
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 18  
   }
-
- });
-
-
-
+});
