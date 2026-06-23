@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   boton: {
-    width: '85%',
+    width: '25%',
     marginVertical: 8,
     borderRadius: 12,
     overflow: 'hidden', //  borde redondeado
