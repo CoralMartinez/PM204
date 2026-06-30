@@ -146,7 +146,12 @@ SÍMBOLOS
 
 `   \
 
+GIT COMMIT
 
+git status
+git add .
+git commit -m "mensaje"
+git push origin main
 
 
  */
