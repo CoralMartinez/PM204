@@ -188,7 +188,7 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
         Inicio de sesión
       </Text>
 
-      {/* Coral: Capturamos el nombre. */}
+      {/* Compañera: Capturamos el nombre. */}
       <TextInput
         style={styles.i}
         placeholder="Nombre"
@@ -197,7 +197,7 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
         onChangeText={setN}
       />
 
-      {/* Coral: Capturamos el correo. */}
+      {/* Compañera: Capturamos el correo. */}
       <TextInput
         style={styles.i}
         placeholder="Correo"
@@ -206,7 +206,7 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
         onChangeText={setC}
       />
 
-      {/* Coral: Capturamos la contraseña. */}
+      {/* Compañera: Capturamos la contraseña. */}
       <TextInput
         style={styles.i}
         placeholder="Contraseña"
@@ -216,7 +216,7 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
         secureTextEntry
       />
 
-      {/* Coral: Mostramos errores si existen. */}
+      {/* Compañera: Mostramos errores si existen. */}
       {!!e &&
         <Text style={styles.azul}>
           {e}
@@ -246,7 +246,7 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
 
       ) : (
 
-        // Coral: Botón para iniciar sesión.
+        // Compañera: Botón para iniciar sesión.
         <TouchableOpacity
           style={styles.btn}
           onPress={login}

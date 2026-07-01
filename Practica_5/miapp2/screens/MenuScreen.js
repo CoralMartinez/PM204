@@ -8,8 +8,8 @@ import SafeAreaScreen from './SafeAreaScreen';
 import Pressable from './Pressable_Switch';
 import TextInput from './TextInput_Alert'
 import FlatList from './FlatList_SectionList';
-import Image_1 from './Uno_ImageBackground_SlapshScreen';
-import Image_2 from './Dos_ImageBackground_SlapshScreen';
+import Image_1 from './Uno_ImageBackground_SplashScreen';
+import Image_2 from './Dos_ImageBackground_SplashScreen';
 import Activity from './ActivityIndicator_KeyboardAvoidingView'
 import Modal from './Modal_Bottom_Sheet'
 
@@ -76,11 +76,11 @@ export default function MenuScreen() {
                         </View>
 
                         <View style={styles.boton}>
-                        <Button title='Práctica 1 ImageBackground y SlapshScreen' onPress={()=>setScreen('imagebackground_1') }/>
+                        <Button title='Práctica 1 ImageBackground y SplashScreen' onPress={()=>setScreen('imagebackground_1') }/>
                         </View>
 
                         <View style={styles.boton}>
-                        <Button title='Práctica 2 ImageBackground y SlapshScreen' onPress={()=>setScreen('imagebackground_2') }/>
+                        <Button title='Práctica 2 ImageBackground y SplashScreen' onPress={()=>setScreen('imagebackground_2') }/>
                         </View>
 
                         <View style={styles.boton}>
