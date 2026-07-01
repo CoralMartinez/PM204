@@ -1,9 +1,22 @@
-//Importaciones
+//==============================
+// IMPORTACIONES
+//==============================
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 
-//Main
+//==============================
+// COMPONENTE PRINCIPAL
+//==============================
 export default function ActivityIndicator_KeyboardAvoidingView() {
 
   const [n, setN] = useState('');
@@ -29,15 +42,18 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
 
   const logout = () => {
     setOut(true);
+
     setTimeout(() => {
       setOk(false);
-      setN(''); setC(''); setP('');
+      setN('');
+      setC('');
+      setP('');
       setE('');
       setOut(false);
     }, 1000);
   };
 
-  if (ok)
+  if (ok) {
     return (
       <View style={styles.ok}>
         <Text style={styles.t}>Bienvenid@ {n}</Text>
@@ -52,18 +68,23 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
             <Text style={styles.btnt}>Cerrar sesión</Text>
           </TouchableOpacity>
         )}
+
         <StatusBar style="dark" />
       </View>
     );
+  }
 
   return (
-    <KeyboardAvoidingView style={styles.c} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView
+      style={styles.c}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
 
       <Text style={styles.t}>Inicio de sesión</Text>
 
-      <TextInput style={styles.i} placeholder="Nombre" placeholderTextColor="#666" value={n} onChangeText={setN} />
-      <TextInput style={styles.i} placeholder="Correo" placeholderTextColor="#666" value={c} onChangeText={setC} />
-      <TextInput style={styles.i} placeholder="Contraseña" placeholderTextColor="#666" value={p} onChangeText={setP} secureTextEntry />
+      <TextInput style={styles.i} placeholder="Nombre" value={n} onChangeText={setN} />
+      <TextInput style={styles.i} placeholder="Correo" value={c} onChangeText={setC} />
+      <TextInput style={styles.i} placeholder="Contraseña" value={p} onChangeText={setP} secureTextEntry />
 
       {!!e && <Text style={styles.azul}>{e}</Text>}
 
@@ -80,15 +101,29 @@ export default function ActivityIndicator_KeyboardAvoidingView() {
   );
 }
 
-//Estilos
+//==============================
+// ESTILOS
+//==============================
 const styles = StyleSheet.create({
 
-  c: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
+  c: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 100
+  },
 
-  ok: { flex: 1, backgroundColor: '#FFE862', justifyContent: 'center', alignItems: 'center' },
+  ok: {
+    flex: 1,
+    backgroundColor: '#FFE862',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 100
+  },
 
   t: {
-    fontSize: 32, 
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#002fa7',
     marginBottom: 20
@@ -100,7 +135,7 @@ const styles = StyleSheet.create({
     borderColor: '#002fa7',
     marginVertical: 6,
     padding: 12,
-    fontSize: 18,   
+    fontSize: 18,
     color: '#002fa7'
   },
 
@@ -114,13 +149,13 @@ const styles = StyleSheet.create({
   btnt: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 20  
+    fontSize: 20
   },
 
   azul: {
     color: '#002fa7',
     marginTop: 10,
     fontWeight: 'bold',
-    fontSize: 18  
+    fontSize: 18
   }
 });

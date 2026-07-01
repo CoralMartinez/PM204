@@ -1,19 +1,9 @@
-//COMENTADO
-
 //=====================================================
 // IMPORTACIONES
 //=====================================================
 
-// Coral: Importamos React y useState para crear estados.
 import React, { useState } from 'react';
-
-// Coral: Barra de estado del dispositivo.
 import { StatusBar } from 'expo-status-bar';
-
-// Coral:
-// ActivityIndicator será el componente que explicaré.
-// Compañera:
-// KeyboardAvoidingView lo explicaré yo.
 import {
   StyleSheet,
   Text,
@@ -22,7 +12,9 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  ScrollView,
+  Image
 } from 'react-native';
 
 
@@ -30,302 +22,246 @@ import {
 // COMPONENTE PRINCIPAL
 //=====================================================
 
-// Coral: Aquí comienza nuestra aplicación.
-export default function ActivityIndicator_KeyboardAvoidingView() {
+export default function LoginPantalla() {
 
-  // Coral: Estados para guardar los datos del formulario.
-  const [n, setN] = useState('');
-  const [c, setC] = useState('');
-  const [p, setP] = useState('');
+  const AZUL = '#021a57';
 
-  // Coral: Controla si aparece el ActivityIndicator.
-  const [l, setL] = useState(false);
+  const [nombre, setNombre] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
-  // Coral: Indica si el usuario inició sesión.
-  const [ok, setOk] = useState(false);
-
-  // Coral: Guarda mensajes de error.
-  const [e, setE] = useState('');
-
-  // Coral: Controla el ActivityIndicator al cerrar sesión.
-  const [out, setOut] = useState(false);
-
-  // ❌ Aún NO ejecutamos.
-  // Todavía no existe una interfaz.
-
+  const [cargando, setCargando] = useState(false);
+  const [logueado, setLogueado] = useState(false);
+  const [error, setError] = useState('');
+  const [saliendo, setSaliendo] = useState(false);
 
   //=====================================================
-  // LOGIN/INICIO DE SESIÓN
+  // LOGIN
   //=====================================================
 
-  // Coral: Se ejecuta al presionar "Ingresar".
-  const login = () => {
+  const iniciarSesion = () => {
 
-    // Coral: Validamos que los campos no estén vacíos.
-    if (!n || !c || !p) return setE('Completa campos');
+    if (!nombre || !correo || !contrasena || !confirmarContrasena)
+      return setError('Completa campos');
 
-    // Coral: Validamos el correo.
-    if (!c.includes('@')) return setE('Correo inválido');
+    if (!correo.includes('@'))
+      return setError('Correo inválido');
 
-    // Coral: Limpiamos errores.
-    setE('');
+    if (contrasena !== confirmarContrasena)
+      return setError('Las contraseñas no coinciden');
 
-    // Coral:
-    // Cambiamos el estado a true para mostrar
-    // el ActivityIndicator.
-    setL(true);
+    setError('');
+    setCargando(true);
 
-    // Coral: Simulamos una petición al servidor.
     setTimeout(() => {
-
-      // Coral: Ocultamos el ActivityIndicator.
-      setL(false);
-
-      // Coral: Mostramos la pantalla de bienvenida.
-      setOk(true);
-
+      setCargando(false);
+      setLogueado(true);
     }, 1200);
   };
 
-
   //=====================================================
-  // LOGOUT/CIERRE DE SESIÓN
+  // LOGOUT
   //=====================================================
 
-  // Coral: Se ejecuta al cerrar sesión.
-  const logout = () => {
+  const cerrarSesion = () => {
 
-    // Coral: Activa el ActivityIndicator.
-    setOut(true);
+    setSaliendo(true);
 
     setTimeout(() => {
-
-      // Coral: Regresamos al login.
-      setOk(false);
-
-      // Coral: Limpiamos los campos.
-      setN('');
-      setC('');
-      setP('');
-
-      setE('');
-
-      // Coral: Ocultamos el ActivityIndicator.
-      setOut(false);
-
+      setLogueado(false);
+      setNombre('');
+      setCorreo('');
+      setContrasena('');
+      setConfirmarContrasena('');
+      setError('');
+      setSaliendo(false);
     }, 1000);
   };
 
-
   //=====================================================
-  // PANTALLA DE BIENVENIDA
+  // PANTALLA LOGUEADO
   //=====================================================
 
-  if (ok)
+  if (logueado) {
     return (
+      <View style={[styles.pantallaLogueado, { backgroundColor: AZUL }]}>
 
-      <View style={styles.ok}>
+        <Text style={styles.titulo}>Bienvenid@ {nombre}</Text>
 
-        {/* Coral: Mostramos el nombre del usuario. */}
-        <Text style={styles.t}>
-          Bienvenid@ {n}
-        </Text>
-
-        {out ? (
-
+        {saliendo ? (
           <>
-            {/* Coral:
-                ActivityIndicator mientras
-                se cierra la sesión. LUEGO UN BOTÓN PARA Botón para cerrar sesión.
-            */}
-            <ActivityIndicator color="#002fa7" />
-
-            <Text style={styles.azul}>
-              Saliendo...
-            </Text>
+            <ActivityIndicator size="large" color="#fff" />
+            <Text style={styles.textoSalida}>Saliendo...</Text>
           </>
-
         ) : (
-
-        
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={logout}
-          >
-
-            <Text style={styles.btnt}>
-              Cerrar sesión
-            </Text>
-
+          <TouchableOpacity style={styles.botonCerrarSesion} onPress={cerrarSesion}>
+            <Text style={styles.textoBoton}>Cerrar sesión</Text>
           </TouchableOpacity>
-
         )}
 
-        <StatusBar style="dark" />
-
+        <StatusBar style="light" />
       </View>
-
     );
-
+  }
 
   //=====================================================
   // FORMULARIO
   //=====================================================
 
   return (
-
-    // Compañera:
-    // KeyboardAvoidingView evita que el teclado
-    // cubra los TextInput.
     <KeyboardAvoidingView
-      style={styles.c}
-      behavior={Platform.OS === 'ios'
-        ? 'padding'
-        : 'height'}
+      style={styles.contenedor}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
 
-      <Text style={styles.t}>
-        Inicio de sesión
-      </Text>
+      <ScrollView contentContainerStyle={styles.scrollContenido}>
 
-      {/* Compañera: Capturamos el nombre. */}
-      <TextInput
-        style={styles.i}
-        placeholder="Nombre"
-        placeholderTextColor="#666"
-        value={n}
-        onChangeText={setN}
-      />
+        <Image
+          source={require('../assets/fondo2.png')}
+          style={styles.imagen}
+        />
 
-      {/* Compañera: Capturamos el correo. */}
-      <TextInput
-        style={styles.i}
-        placeholder="Correo"
-        placeholderTextColor="#666"
-        value={c}
-        onChangeText={setC}
-      />
-
-      {/* Compañera: Capturamos la contraseña. */}
-      <TextInput
-        style={styles.i}
-        placeholder="Contraseña"
-        placeholderTextColor="#666"
-        value={p}
-        onChangeText={setP}
-        secureTextEntry
-      />
-
-      {/* Compañera: Mostramos errores si existen. */}
-      {!!e &&
-        <Text style={styles.azul}>
-          {e}
+        <Text style={[styles.titulo, { color: AZUL }]}>
+          Inicio de sesión
         </Text>
-      }
 
-      {l ? (
+        <TextInput
+          style={[styles.campoTexto, { borderColor: AZUL, color: AZUL }]}
+          placeholder="Nombre"
+          placeholderTextColor="#666"
+          value={nombre}
+          onChangeText={setNombre}
+        />
 
-        <>
-          {/* Coral:
-              ActivityIndicator en funcionamiento.
-              Props utilizadas:
-              size
-              color
-          */}
-          <ActivityIndicator
-            size="large"
-            color="#002fa7"
-            animating={l}
-          />
+        <TextInput
+          style={[styles.campoTexto, { borderColor: AZUL, color: AZUL }]}
+          placeholder="Correo"
+          placeholderTextColor="#666"
+          value={correo}
+          onChangeText={setCorreo}
+        />
 
-          <Text style={styles.azul}>
-            Validando información...
+        <TextInput
+          style={[styles.campoTexto, { borderColor: AZUL, color: AZUL }]}
+          placeholder="Contraseña"
+          placeholderTextColor="#666"
+          value={contrasena}
+          onChangeText={setContrasena}
+          secureTextEntry
+        />
+
+        <TextInput
+          style={[styles.campoTexto, { borderColor: AZUL, color: AZUL }]}
+          placeholder="Confirmar contraseña"
+          placeholderTextColor="#666"
+          value={confirmarContrasena}
+          onChangeText={setConfirmarContrasena}
+          secureTextEntry
+        />
+
+        {!!error && (
+          <Text style={[styles.textoError, { color: AZUL }]}>
+            {error}
           </Text>
+        )}
 
-        </>
+        {cargando ? (
+          <ActivityIndicator size="large" color={AZUL} />
+        ) : (
+          <TouchableOpacity
+            style={[styles.botonIngresar, { backgroundColor: AZUL }]}
+            onPress={iniciarSesion}
+          >
+            <Text style={styles.textoBoton}>Ingresar</Text>
+          </TouchableOpacity>
+        )}
 
-      ) : (
+        <View style={{ height: 120 }} />
 
-        // Compañera: Botón para iniciar sesión.
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={login}
-        >
-
-          <Text style={styles.btnt}>
-            Ingresar
-          </Text>
-
-        </TouchableOpacity>
-
-      )}
+      </ScrollView>
 
       <StatusBar style="dark" />
-
     </KeyboardAvoidingView>
-
   );
-
 }
 
 
 //=====================================================
-// ESTILOS
+// ESTILOS (EN ESPAÑOL)
 //=====================================================
 
-// Compañera:
-// Aquí definimos la apariencia de la aplicación.
 const styles = StyleSheet.create({
 
-  c: {
+  contenedor: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
+  },
+
+  scrollContenido: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40
+  },
+
+  pantallaLogueado: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
 
-  ok: {
-    flex: 1,
-    backgroundColor: '#FFE862',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  t: {
+  titulo: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#002fa7',
-    marginBottom: 20
+    marginBottom: 20,
+    color: '#fff'
   },
 
-  i: {
+  campoTexto: {
     width: '85%',
     borderWidth: 1,
-    borderColor: '#002fa7',
     marginVertical: 6,
     padding: 12,
-    fontSize: 18,
-    color: '#002fa7'
+    fontSize: 18
   },
 
-  btn: {
-    backgroundColor: '#002fa7',
+  botonIngresar: {
     padding: 14,
     marginTop: 15,
     borderRadius: 8
   },
 
-  btnt: {
+  botonCerrarSesion: {
+    padding: 14,
+    marginTop: 15,
+    borderRadius: 8,
+    backgroundColor: '#ac0707'
+  },
+
+  textoBoton: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 20
   },
 
-  azul: {
-    color: '#002fa7',
+  textoError: {
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+
+  textoSalida: {
+    color: '#fff',
     marginTop: 10,
     fontWeight: 'bold',
     fontSize: 18
-  }
+  },
 
+  imagen: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 10
+  }
 });
