@@ -1,6 +1,4 @@
-//=====================================================
 // IMPORTACIONES
-//=====================================================
 
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
@@ -18,9 +16,7 @@ import {
 } from 'react-native';
 
 
-//=====================================================
 // COMPONENTE PRINCIPAL
-//=====================================================
 
 export default function LoginPantalla() {
 
@@ -36,9 +32,7 @@ export default function LoginPantalla() {
   const [error, setError] = useState('');
   const [saliendo, setSaliendo] = useState(false);
 
-  //=====================================================
   // LOGIN
-  //=====================================================
 
   const iniciarSesion = () => {
 
@@ -60,9 +54,7 @@ export default function LoginPantalla() {
     }, 1200);
   };
 
-  //=====================================================
   // LOGOUT
-  //=====================================================
 
   const cerrarSesion = () => {
 
@@ -79,9 +71,8 @@ export default function LoginPantalla() {
     }, 1000);
   };
 
-  //=====================================================
   // PANTALLA LOGUEADO
-  //=====================================================
+  
 
   if (logueado) {
     return (
@@ -105,10 +96,7 @@ export default function LoginPantalla() {
     );
   }
 
-  //=====================================================
   // FORMULARIO
-  //=====================================================
-
   return (
     <KeyboardAvoidingView
       style={styles.contenedor}
@@ -187,9 +175,7 @@ export default function LoginPantalla() {
 }
 
 
-//=====================================================
-// ESTILOS (EN ESPAÑOL)
-//=====================================================
+// ESTILOS
 
 const styles = StyleSheet.create({
 
