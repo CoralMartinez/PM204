@@ -154,4 +154,15 @@ git commit -m "mensaje"
 git push origin main
 
 
+
+Commit en GitHub
+
+Entrar a la carpeta--> cd C:\PM204
+Revisar cambios  --> git status
+Agregar cambios al commit --> git add .
+Crear commit --> git commit -m "commit"
+Subir el commit a GitHub  --> git push origin main
+Verificar que quedó limpio: git status
+
+
  */
