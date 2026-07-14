@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ffffff33'
-  },
+  },   
 
   subtitulo: {
     color: '#dddddd',
