@@ -1,40 +1,67 @@
-import React, {useState, useEffect}from 'react';
-import {SafeAreaView,View,Text,FlatList,StyleSheet,
+import React, { useState, useCallback } from 'react';
+
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable
 } from 'react-native';
+
+import {
+  router,
+  useFocusEffect
+} from "expo-router";
 
 export default function ConsultaUsuariosScreen() {
 
   const [usuarios, setUsuarios] = useState([]);
 
-  const obtenerUsuarios = async()=>{
-    try{
+  const obtenerUsuarios = async () => {
 
-      //const respuesta = await fetch('http://10.88.53.89:5000/v1/usuarios/');
-      const respuesta = await fetch('http://localhost:5000/v1/usuarios')
+    try {
+
+      const respuesta = await fetch(
+        'http://192.168.0.252:5000/v1/usuarios'
+      );
+
       const datos = await respuesta.json();
-      console.log("Respuesta API: ", datos);
 
-      setUsuarios(datos.usuarios)
+      console.log("Respuesta API:", datos);
 
-    }
-    
-    catch(error){
-
-      console.log("Error de API", error)
+      setUsuarios(datos.usuarios);
 
     }
 
-  }
+    catch (error) {
 
-  useEffect(() => {obtenerUsuarios(); }, []);
+      console.log(
+        "Error de API",
+        error
+      );
 
+    }
 
+  };
 
+  useFocusEffect(
+
+    useCallback(() => {
+
+      obtenerUsuarios();
+
+    }, [])
+
+  );
 
   const renderTarjeta = ({ item }) => (
+
     <View style={styles.card}>
 
-      <Text style={styles.nombre}>{item.nombre}</Text>
+      <Text style={styles.nombre}>
+        {item.nombre}
+      </Text>
 
       <View style={styles.linea}></View>
 
@@ -42,7 +69,36 @@ export default function ConsultaUsuariosScreen() {
         Edad: {item.edad} años
       </Text>
 
+      <Pressable
+
+        style={styles.boton}
+
+        onPress={() => {
+
+          router.push({
+
+            pathname: "/detalle",
+
+            params: {
+              id: item.id,
+              nombre: item.nombre,
+              edad: item.edad
+            }
+
+          });
+
+        }}
+
+      >
+
+        <Text style={styles.textoBoton}>
+          Ver detalle
+        </Text>
+
+      </Pressable>
+
     </View>
+
   );
 
   return (
@@ -54,16 +110,25 @@ export default function ConsultaUsuariosScreen() {
       </Text>
 
       <FlatList
+
         data={usuarios}
-        keyExtractor={(item) => item.id}
+
+        keyExtractor={(item) => item.id.toString()}
+
         renderItem={renderTarjeta}
+
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+
+        contentContainerStyle={{
+          paddingBottom: 20
+        }}
+
       />
 
     </SafeAreaView>
+
   );
-  
+
 }
 
 const styles = StyleSheet.create({
@@ -71,7 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F7FA',
-    padding: 20,
+    padding: 20
   },
 
   titulo: {
@@ -79,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#1F2937',
-    marginBottom: 20,
+    marginBottom: 20
   },
 
   card: {
@@ -88,31 +153,43 @@ const styles = StyleSheet.create({
     padding: 18,
     marginBottom: 15,
     elevation: 4,
-
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowRadius: 5,
     shadowOffset: {
       width: 0,
-      height: 3,
-    },
+      height: 3
+    }
   },
 
   nombre: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#2563EB'
   },
 
   linea: {
     height: 1,
     backgroundColor: '#E5E7EB',
-    marginVertical: 10,
+    marginVertical: 10
   },
 
   info: {
     fontSize: 16,
-    color: '#4B5563',
+    color: '#4B5563'
   },
+
+  boton: {
+    marginTop: 15,
+    backgroundColor: "#2563EB",
+    padding: 10,
+    borderRadius: 8,
+    alignItems: "center"
+  },
+
+  textoBoton: {
+    color: "white",
+    fontWeight: "bold"
+  }
 
 });
